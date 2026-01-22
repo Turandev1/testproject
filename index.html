@@ -1,0 +1,381 @@
+<html lang="en">
+  <head>
+    <script src="chrome-extension://lgblnfidahcdcjddiepkckcfdhpknnjh/content/popups-script.js"></script>
+
+    <meta charset="utf-8" />
+    <title>SemsLogin</title>
+    <base href="./" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+
+    <link
+      href="https://fonts.cdnfonts.com/css/euclid-circular-b"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="index.css" />
+    <style>
+      .divider[_ngcontent-bge-c57] {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .app-left[_ngcontent-bge-c57] {
+        width: calc(46vw - 40px);
+        background: var(--main-color-400);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--colors-neutral);
+        border-radius: 12px;
+      }
+      .app-left[_ngcontent-bge-c57],
+      .app-right[_ngcontent-bge-c57] {
+        height: calc(100vh - 40px);
+      }
+      .app-right[_ngcontent-bge-c57] {
+        width: calc(54vw - 40px);
+        overflow: scroll;
+        scrollbar-width: none;
+      }
+    </style>
+    <style>
+      .snackbar[_ngcontent-bge-c56] {
+        position: fixed;
+        display: flex;
+        flex-direction: row;
+        width: calc(54vw - 40px);
+        height: 56px;
+        bottom: 24px;
+        right: 24px;
+        border-radius: 6px;
+        font-weight: 700;
+        z-index: 9999;
+        opacity: 1;
+        transition: all 0.3s ease-in-out;
+      }
+      .label-error[_ngcontent-bge-c56] {
+        background: #f81734;
+      }
+      .label-error[_ngcontent-bge-c56],
+      .label-success[_ngcontent-bge-c56] {
+        width: 8px;
+        height: 56px;
+        border-radius: 6px 0 0 6px;
+      }
+      .label-success[_ngcontent-bge-c56] {
+        background: #32b878;
+      }
+      .label-info[_ngcontent-bge-c56] {
+        background: #d08700;
+      }
+      .label-info[_ngcontent-bge-c56],
+      .label-warning[_ngcontent-bge-c56] {
+        width: 8px;
+        height: 56px;
+        border-radius: 6px 0 0 6px;
+      }
+      .label-warning[_ngcontent-bge-c56] {
+        background: #2970ff;
+      }
+      .message-error[_ngcontent-bge-c56] {
+        background: #fee4e2;
+      }
+      .message-success[_ngcontent-bge-c56] {
+        background: #d1fadf;
+      }
+      .message-info[_ngcontent-bge-c56] {
+        background: #fefce8;
+      }
+      .message-warning[_ngcontent-bge-c56] {
+        background: #d1e0ff;
+      }
+      .message[_ngcontent-bge-c56] {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px;
+        width: 100%;
+        height: 56px;
+        border-radius: 0 6px 6px 0;
+      }
+      .message[_ngcontent-bge-c56],
+      .message[_ngcontent-bge-c56] .info[_ngcontent-bge-c56] {
+        display: flex;
+      }
+      .message[_ngcontent-bge-c56]
+        .info[_ngcontent-bge-c56]
+        p[_ngcontent-bge-c56] {
+        margin-left: 16px;
+        font-weight: 500;
+        font-size: 16px;
+      }
+      .message[_ngcontent-bge-c56] .close-snackbar[_ngcontent-bge-c56] {
+        cursor: pointer;
+      }
+      .success[_ngcontent-bge-c56] {
+        background-color: #4caf50;
+      }
+      .error[_ngcontent-bge-c56] {
+        background-color: #f44336;
+      }
+      .hide-snack[_ngcontent-bge-c56] {
+        opacity: 0;
+        visibility: hidden;
+      }
+      img[_ngcontent-bge-c56] {
+        user-drag: none;
+        -webkit-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+      }
+    </style>
+    <style>
+      .mat-spinner[_ngcontent-bge-c39] circle[_ngcontent-bge-c39],
+      .mat-progress-spinner circle {
+        stroke: #fff;
+      }
+      .main[_ngcontent-bge-c39] {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .logo[_ngcontent-bge-c39] {
+        margin-top: 40px;
+        margin-bottom: 20px;
+      }
+      .logo[_ngcontent-bge-c39] h1[_ngcontent-bge-c39] {
+        font-weight: 700;
+        font-style: Bold;
+        font-size: 18px;
+        leading-trim: NONE;
+        line-height: 100%;
+        letter-spacing: 0;
+        text-align: center;
+        color: var(--main-color-500);
+        margin-bottom: 60px;
+      }
+      .login[_ngcontent-bge-c39] {
+        padding: 32px;
+        width: 480px;
+      }
+      .login[_ngcontent-bge-c39] .header[_ngcontent-bge-c39] {
+        margin-bottom: 32px;
+      }
+      .login[_ngcontent-bge-c39]
+        .header[_ngcontent-bge-c39]
+        h1[_ngcontent-bge-c39] {
+        font-weight: 700;
+        font-style: Bold;
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+      .login[_ngcontent-bge-c39]
+        .header[_ngcontent-bge-c39]
+        h1[_ngcontent-bge-c39],
+      .login[_ngcontent-bge-c39]
+        .header[_ngcontent-bge-c39]
+        h2[_ngcontent-bge-c39] {
+        leading-trim: NONE;
+        line-height: 100%;
+        letter-spacing: 0;
+        text-align: center;
+      }
+      .login[_ngcontent-bge-c39]
+        .header[_ngcontent-bge-c39]
+        h2[_ngcontent-bge-c39] {
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 16px;
+      }
+      .login[_ngcontent-bge-c39] .forgot-row[_ngcontent-bge-c39] {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 8px;
+        margin-bottom: 32px;
+      }
+      .login[_ngcontent-bge-c39]
+        .forgot-row[_ngcontent-bge-c39]
+        p[_ngcontent-bge-c39] {
+        font-weight: 500;
+        font-style: Medium;
+        font-size: 16px;
+        leading-trim: NONE;
+        line-height: 100%;
+        letter-spacing: 0;
+        text-align: right;
+        vertical-align: middle;
+        color: var(--main-color-500);
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .login[_ngcontent-bge-c39]
+        .forgot-row[_ngcontent-bge-c39]
+        p[_ngcontent-bge-c39]:hover {
+        color: #5ecabf;
+      }
+    </style>
+  </head>
+  <body>
+    <app-root _nghost-bge-c57="" ng-version="9.1.13"
+      ><div _ngcontent-bge-c57="" class="divider">
+        <div _ngcontent-bge-c57="" class="app-left">
+          <img _ngcontent-bge-c57="" src="assets/bdu-logo.svg" alt="" />
+        </div>
+        <div _ngcontent-bge-c57="" class="app-right">
+          <router-outlet _ngcontent-bge-c57=""></router-outlet
+          ><app-main _nghost-bge-c39=""
+            ><div _ngcontent-bge-c39="" class="main">
+              <div _ngcontent-bge-c39="" class="logo">
+                <h1 _ngcontent-bge-c39="">Bakı Dövlət Universiteti</h1>
+                <img _ngcontent-bge-c39="" src="assets/sems-logo.svg" alt="" />
+              </div>
+              <div _ngcontent-bge-c39="" class="login">
+                <div _ngcontent-bge-c39="" class="header">
+                  <h1 _ngcontent-bge-c39="">Bakı Dövlət Universiteti</h1>
+                  <h2 _ngcontent-bge-c39="">
+                    İstifadəçilərinin elektron kabinetinə giriş
+                  </h2>
+                </div>
+                <div _ngcontent-bge-c39="" class="credentials">
+                  <form
+                    _ngcontent-bge-c39=""
+                    novalidate=""
+                    class="ng-untouched ng-pristine ng-invalid"
+                  >
+                    <div _ngcontent-bge-c39="" class="input">
+                      <label _ngcontent-bge-c39="" for="username"
+                        >İstifadəçi adı</label
+                      >
+                      <input
+                        _ngcontent-bge-c39=""
+                        type="text"
+                        id="username"
+                        required=""
+                        name="username"
+                        ngmodel=""
+                        placeholder="İstifadəçi adı"
+                        class="ng-untouched ng-pristine ng-invalid"
+                      />
+                    </div>
+                    <div _ngcontent-bge-c39="" class="input">
+                      <label _ngcontent-bge-c39="" for="password">Şifrə</label>
+                      <input
+                        _ngcontent-bge-c39=""
+                        id="password"
+                        required=""
+                        name="password"
+                        ngmodel=""
+                        value=""
+                        placeholder="Şifrə"
+                        type="password"
+                        class="ng-untouched ng-pristine ng-invalid"
+                      />
+                      <img
+                        _ngcontent-bge-c39=""
+                        src="assets/eye-on.svg"
+                        class="toggle-pass"
+                      /><!----><!---->
+                    </div>
+                    <div _ngcontent-bge-c39="" class="forgot-row">
+                      <div _ngcontent-bge-c39="" class="radio">
+                        <label _ngcontent-bge-c39="" class="custom-checkbox2"
+                          ><input _ngcontent-bge-c39="" type="checkbox" /><span
+                            _ngcontent-bge-c39=""
+                            class="checkmark"
+                          ></span>
+                          Yadda saxla
+                        </label>
+                      </div>
+                      <a
+                        href="./pages/forgotpass.html"
+                        _ngcontent-bge-c39=""
+                        tabindex="0"
+                      >
+                        Şifrəni unutmusunuz?
+                      </a>
+                    </div>
+                    <button
+                      _ngcontent-bge-c39=""
+                      type="submit"
+                      class="button-main w-100"
+                    >
+                      Daxil ol
+                      <!----><!----><!---->
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div></app-main
+          ><!----><app-custom-snackbar _ngcontent-bge-c57="" _nghost-bge-c56=""
+            ><div _ngcontent-bge-c56="" class="snackbar hide-snack">
+              <div _ngcontent-bge-c56="" class="label label-undefined"></div>
+              <div _ngcontent-bge-c56="" class="message message-undefined">
+                <div _ngcontent-bge-c56="" class="info">
+                  <!----><!----><!----><!---->
+                  <p _ngcontent-bge-c56=""></p>
+                </div>
+                <!---->
+              </div>
+            </div></app-custom-snackbar
+          >
+        </div>
+      </div>
+    </app-root>
+
+    <div
+      class="cdk-live-announcer-element cdk-visually-hidden"
+      aria-atomic="true"
+      aria-live="polite"
+    ></div>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const passwordInput = document.getElementById("password");
+      const usernameInput = document.getElementById("username");
+      const togglePassIcon = document.querySelector(".toggle-pass");
+      const loginForm = document.querySelector("form");
+      const submitBtn = document.querySelector(".button-main");
+
+      // 1. Şifrəni göstər/gizlə (Eye toggle)
+      if (togglePassIcon && passwordInput) {
+        togglePassIcon.addEventListener("click", function () {
+          if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            this.src = "assets/eye-off.svg"; // Açıq göz ikonu
+          } else {
+            passwordInput.type = "password";
+            this.src = "assets/eye-on.svg"; // Bağlı göz ikonu
+          }
+        });
+      }
+
+      // 2. Naviqasiya Məntiqi (Giriş yoxlanışı)
+      loginForm.addEventListener("submit", function (e) {
+        e.preventDefault(); // Formun standart göndərilməsini dayandırırıq
+
+        const userValue = usernameInput.value.trim();
+        const passValue = passwordInput.value.trim();
+
+        // Statik yoxlanış: Əgər xanalar boş deyilsə yönləndir
+        if (userValue !== "" && passValue !== "") {
+          // Düymənin vizual effektini dəyişirik
+          submitBtn.innerHTML = "Giriş edilir... <span class='spinner'></span>";
+          submitBtn.disabled = true;
+          submitBtn.style.opacity = "0.7";
+
+          // Kiçik bir gecikmə (simulyasiya) ilə daxili səhifəyə yönləndirmə
+          setTimeout(() => {
+            // Bura keçid etmək istədiyin daxili səhifənin adını yaz
+            window.location.href = "dashboard.html";
+          }, 1000);
+        } else {
+          // Əgər boşdursa xəbərdarlıq (istəyə bağlı olaraq snackbar-ı da aktiv edə bilərsən)
+          alert("Zəhmət olmasa istifadəçi adı və şifrəni daxil edin.");
+        }
+      });
+    });
+  </script>
+</html>
