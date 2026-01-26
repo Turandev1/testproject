@@ -1,0 +1,344 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>SemsLogin</title>
+    <base href="./" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link
+      href="https://fonts.cdnfonts.com/css/euclid-circular-b"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="forgotpass.css" />
+    <style>
+      .divider[_ngcontent-qyu-c57] {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .app-left[_ngcontent-qyu-c57] {
+        width: calc(46vw - 40px);
+        background: var(--main-color-400);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--colors-neutral);
+        border-radius: 12px;
+      }
+      .app-left[_ngcontent-qyu-c57],
+      .app-right[_ngcontent-qyu-c57] {
+        height: calc(100vh - 40px);
+      }
+      .app-right[_ngcontent-qyu-c57] {
+        width: calc(54vw - 40px);
+        overflow: scroll;
+        scrollbar-width: none;
+      }
+    </style>
+    <style>
+      .snackbar[_ngcontent-qyu-c56] {
+        position: fixed;
+        display: flex;
+        flex-direction: row;
+        width: calc(54vw - 40px);
+        height: 56px;
+        bottom: 24px;
+        right: 24px;
+        border-radius: 6px;
+        font-weight: 700;
+        z-index: 9999;
+        opacity: 1;
+        transition: all 0.3s ease-in-out;
+      }
+      .label-error[_ngcontent-qyu-c56] {
+        background: #f81734;
+      }
+      .label-error[_ngcontent-qyu-c56],
+      .label-success[_ngcontent-qyu-c56] {
+        width: 8px;
+        height: 56px;
+        border-radius: 6px 0 0 6px;
+      }
+      .label-success[_ngcontent-qyu-c56] {
+        background: #32b878;
+      }
+      .label-info[_ngcontent-qyu-c56] {
+        background: #d08700;
+      }
+      .label-info[_ngcontent-qyu-c56],
+      .label-warning[_ngcontent-qyu-c56] {
+        width: 8px;
+        height: 56px;
+        border-radius: 6px 0 0 6px;
+      }
+      .label-warning[_ngcontent-qyu-c56] {
+        background: #2970ff;
+      }
+      .message-error[_ngcontent-qyu-c56] {
+        background: #fee4e2;
+      }
+      .message-success[_ngcontent-qyu-c56] {
+        background: #d1fadf;
+      }
+      .message-info[_ngcontent-qyu-c56] {
+        background: #fefce8;
+      }
+      .message-warning[_ngcontent-qyu-c56] {
+        background: #d1e0ff;
+      }
+      .message[_ngcontent-qyu-c56] {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px;
+        width: 100%;
+        height: 56px;
+        border-radius: 0 6px 6px 0;
+      }
+      .message[_ngcontent-qyu-c56],
+      .message[_ngcontent-qyu-c56] .info[_ngcontent-qyu-c56] {
+        display: flex;
+      }
+      .message[_ngcontent-qyu-c56]
+        .info[_ngcontent-qyu-c56]
+        p[_ngcontent-qyu-c56] {
+        margin-left: 16px;
+        font-weight: 500;
+        font-size: 16px;
+      }
+      .message[_ngcontent-qyu-c56] .close-snackbar[_ngcontent-qyu-c56] {
+        cursor: pointer;
+      }
+      .success[_ngcontent-qyu-c56] {
+        background-color: #4caf50;
+      }
+      .error[_ngcontent-qyu-c56] {
+        background-color: #f44336;
+      }
+      .hide-snack[_ngcontent-qyu-c56] {
+        opacity: 0;
+        visibility: hidden;
+      }
+      img[_ngcontent-qyu-c56] {
+        user-drag: none;
+        -webkit-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+      }
+    </style>
+    <style>
+      .mat-spinner[_ngcontent-qyu-c39] circle[_ngcontent-qyu-c39],
+      .mat-progress-spinner circle {
+        stroke: #fff;
+      }
+      .main[_ngcontent-qyu-c39] {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .logo[_ngcontent-qyu-c39] {
+        margin-top: 40px;
+        margin-bottom: 20px;
+      }
+      .logo[_ngcontent-qyu-c39] h1[_ngcontent-qyu-c39] {
+        font-weight: 700;
+        font-style: Bold;
+        font-size: 18px;
+        leading-trim: NONE;
+        line-height: 100%;
+        letter-spacing: 0;
+        text-align: center;
+        color: var(--main-color-500);
+        margin-bottom: 60px;
+      }
+      .login[_ngcontent-qyu-c39] {
+        padding: 32px;
+        width: 480px;
+      }
+      .login[_ngcontent-qyu-c39] .header[_ngcontent-qyu-c39] {
+        margin-bottom: 32px;
+      }
+      .login[_ngcontent-qyu-c39]
+        .header[_ngcontent-qyu-c39]
+        h1[_ngcontent-qyu-c39] {
+        font-weight: 700;
+        font-style: Bold;
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+      .login[_ngcontent-qyu-c39]
+        .header[_ngcontent-qyu-c39]
+        h1[_ngcontent-qyu-c39],
+      .login[_ngcontent-qyu-c39]
+        .header[_ngcontent-qyu-c39]
+        h2[_ngcontent-qyu-c39] {
+        leading-trim: NONE;
+        line-height: 100%;
+        letter-spacing: 0;
+        text-align: center;
+      }
+      .login[_ngcontent-qyu-c39]
+        .header[_ngcontent-qyu-c39]
+        h2[_ngcontent-qyu-c39] {
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 16px;
+      }
+      .login[_ngcontent-qyu-c39] .forgot-row[_ngcontent-qyu-c39] {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 8px;
+        margin-bottom: 32px;
+      }
+      .login[_ngcontent-qyu-c39]
+        .forgot-row[_ngcontent-qyu-c39]
+        p[_ngcontent-qyu-c39] {
+        font-weight: 500;
+        font-style: Medium;
+        font-size: 16px;
+        leading-trim: NONE;
+        line-height: 100%;
+        letter-spacing: 0;
+        text-align: right;
+        vertical-align: middle;
+        color: var(--main-color-500);
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .login[_ngcontent-qyu-c39]
+        .forgot-row[_ngcontent-qyu-c39]
+        p[_ngcontent-qyu-c39]:hover {
+        color: #5ecabf;
+      }
+    </style>
+    <style>
+      .mat-spinner[_ngcontent-qyu-c51] circle[_ngcontent-qyu-c51],
+      .mat-progress-spinner circle {
+        stroke: #fff;
+      }
+      .containerr[_ngcontent-qyu-c51] {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+      }
+      .containerr[_ngcontent-qyu-c51]
+        .info[_ngcontent-qyu-c51]
+        h1[_ngcontent-qyu-c51] {
+        font-weight: 600;
+        font-size: 24px;
+        color: #404040;
+        margin-bottom: 8px;
+      }
+      .containerr[_ngcontent-qyu-c51]
+        .info[_ngcontent-qyu-c51]
+        h1[_ngcontent-qyu-c51],
+      .containerr[_ngcontent-qyu-c51]
+        .info[_ngcontent-qyu-c51]
+        h2[_ngcontent-qyu-c51] {
+        line-height: 100%;
+        letter-spacing: 0;
+        text-align: center;
+      }
+      .containerr[_ngcontent-qyu-c51]
+        .info[_ngcontent-qyu-c51]
+        h2[_ngcontent-qyu-c51] {
+        font-weight: 400;
+        font-size: 18px;
+        color: #262626;
+      }
+      .containerr[_ngcontent-qyu-c51] .credentials[_ngcontent-qyu-c51] {
+        width: 416px;
+      }
+    </style>
+  </head>
+  <body>
+    <app-root _nghost-qyu-c57="" ng-version="9.1.13"
+      ><div _ngcontent-qyu-c57="" class="divider">
+        <div _ngcontent-qyu-c57="" class="app-left">
+          <img _ngcontent-qyu-c57="" src="../assets/bdu-logo.svg" alt="" />
+        </div>
+        <div _ngcontent-qyu-c57="" class="app-right">
+          <router-outlet _ngcontent-qyu-c57=""></router-outlet
+          ><app-reset-password _nghost-qyu-c51=""
+            ><div _ngcontent-qyu-c51="" class="containerr">
+              <div _ngcontent-qyu-c51="" class="logo">
+                <img
+                  _ngcontent-qyu-c51=""
+                  src="../assets/sems-logo.svg"
+                  alt=""
+                />
+              </div>
+              <div _ngcontent-qyu-c51="" class="info">
+                <h1 _ngcontent-qyu-c51="">Şifrənizi yeniləmək üçün</h1>
+                <h2 _ngcontent-qyu-c51="">
+                  Fin kodunuzu daxil etdikdən sonra 'Davam et'
+                  <br _ngcontent-qyu-c51="" />
+                  düyməsini klikləyin.
+                </h2>
+              </div>
+              <div _ngcontent-qyu-c51="" class="credentials">
+                <form
+                  _ngcontent-qyu-c51=""
+                  novalidate=""
+                  class="ng-untouched ng-pristine ng-invalid"
+                >
+                  <div _ngcontent-qyu-c51="" class="input">
+                    <label _ngcontent-qyu-c51="" for="pincode">FIN kod</label
+                    ><input
+                      _ngcontent-qyu-c51=""
+                      type="text"
+                      id="pincode"
+                      required=""
+                      name="pincode"
+                      placeholder="FIN kod"
+                      class="ng-untouched ng-pristine ng-invalid"
+                    />
+                  </div>
+                  <button
+                    _ngcontent-qyu-c51=""
+                    class="button-main w-100"
+                    style="margin-bottom: 32px"
+                  >
+                    Davam et
+                    <!----><!----><!----></button
+                  ><a href="../index.html"
+                    _ngcontent-qyu-c51=""
+                    class="button-main-outline w-100"
+                    tabindex="0"
+                    
+                  >
+                    Geri qayıt
+                </a>
+                </form>
+              </div>
+            </div></app-reset-password
+          ><!----><app-custom-snackbar _ngcontent-qyu-c57="" _nghost-qyu-c56=""
+            ><div _ngcontent-qyu-c56="" class="snackbar hide-snack">
+              <div _ngcontent-qyu-c56="" class="label label-undefined"></div>
+              <div _ngcontent-qyu-c56="" class="message message-undefined">
+                <div _ngcontent-qyu-c56="" class="info">
+                  <!----><!----><!----><!---->
+                  <p _ngcontent-qyu-c56=""></p>
+                </div>
+                <!---->
+              </div>
+            </div></app-custom-snackbar
+          >
+        </div>
+      </div></app-root
+    >
+
+
+    <div
+      class="cdk-live-announcer-element cdk-visually-hidden"
+      aria-atomic="true"
+      aria-live="polite"
+    ></div>
+  </body>
+</html>
